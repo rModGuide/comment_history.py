@@ -1,5 +1,5 @@
 
-##  This version of the bot works with u/ghostofbearbryant / submanagerbot.
+## Modmail User Comment History Bot.  Updated version of u/user_history_bot
 
 
 import praw
@@ -9,12 +9,11 @@ import sys
 import config
 
 
-sub_name = 'UnresolvedMysteries+TrueCrime+serialkillers+KitchenConfidential+TrueCrimeDiscussion+ask+QAnonCasualties+questions+lol+mauramurray+RedditCrimeCommunity+morbidcuriosity+MadeleineMccann+CaseyAnthony+secfootball+southernfood+KelseyBerreth+GQP+RedheadMurders+OjSimpson+antivaxxcasualties+TrueCrimeLounge+WWRDD+FoodCube+BoycottFoxAdvertisers+RCC_Archive+BuckRowdy+VanillaIceCream+Bucky_R+u_GhostOfBearBryant+ChocolateIceCream+ghostofbearbryant+jicama+UnresolvedModerators+redditor_justice+MarchSixteenth1992+OkraLovers+SubManagerBot+PaytriotParty+WatchfulEyesBot'
-
+sub_name = 'YOUR_SUBREDDIT'
 
 
 try:
-    reddit = praw.Reddit(   user_agent = 'Subreddit Manager Bot v.10.0.0 by u/buckrowdy & u/ghostofbearbryant for r/mod.',
+    reddit = praw.Reddit(   user_agent = 'User Comment History Bot v.1.0 by u/buckrowdy & u/ghostofbearbryant.',
                             username = config.username,
                             password = config.password,
                             client_id = config.client_id,
@@ -108,25 +107,25 @@ def run_bot():
       traceback.print_exc()             
                     
 
-# if __name__ == "__main__":
-#     try:
-#         reddit = reddit_login()
+ if __name__ == "__main__":
+     try:
+         reddit = reddit_login()
 
-#     except Exception as e:
-#         print("\t\n### ERROR - Could not connect to reddit.")
-#         sys.exit(1)
+     except Exception as e:
+         print("\t\n### ERROR - Could not connect to reddit.")
+         sys.exit(1)
 
-#     # Loop the bot
-#     while True:
+     # Loop the bot
+     while True:
 
-#         try:
-#             run_bot()
-#             print('Sleeping...')
-#             time.sleep(60)  
+         try:
+             run_bot()
+             print('Sleeping...')
+             time.sleep(60)  
         
-#         except Exception as e:
-#             print(f"\t### ERROR - Something went wrong.\n\t{e}")
-#             sys.exit(1)
+         except Exception as e:
+             print(f"\t### ERROR - Something went wrong.\n\t{e}")
+             sys.exit(1)
          
     
 
