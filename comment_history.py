@@ -25,8 +25,6 @@ except Exception as e:
 #return reddit
 
 
-
-
 # Check to see if the user account is an active and valid account.
 def does_user_exist(user):
     try:
@@ -35,8 +33,6 @@ def does_user_exist(user):
         return True
     except praw.exceptions.PRAWException:
         return False
-
-
 
 # Scrape the user's account and compile a table with their comment history. 
 def get_comment_history(user):
@@ -85,11 +81,7 @@ def run_bot():
         unread_conversations = reddit.subreddit(sub_name).modmail.conversations(state="highlighted")
         #unread_conversations = reddit.subreddit(sub_name).modmail.conversations(state="all")
         for conversation in unread_conversations: 
-            #print("Received Message: ", str(conversation))
-            
-            if (len(conversation.authors) >= 1 and len(conversation.messages) >= 1 and "user_history" in conversation.messages[-1].body_markdown):
-                
-                
+            if (len(conversation.authors) >= 1 and len(conversation.messages) >= 1 and "user_history" in conversation.messages[-1].body_markdown): 
                 print(f'Match Found: {conversation.id}')
                 username = conversation.user
                 print(f'Username: {username}')
