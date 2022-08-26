@@ -93,7 +93,44 @@ def run_bot():
                 print('Message Sent Successfully')
                 #conversation.read()
                 conversation.unhighlight()
-                print('Conversation unhighlighted')
+                print('Conversation unhighlighted')           
+            if (len(conversation.authors) >= 1 and len(conversation.messages) >= 1 and "find_last" in conversation.messages[-1].body_markdown):
+                submission_title = None
+                comment_body = None
+                print(f'Match Found: {conversation.id}')
+                username = conversation.user
+                target_sub = conversation.owner
+                api = PushshiftAPI()
+                banned_user = api.search_comments(author=username, subreddit=target_sub, limit = 1)
+                banned_user_posts = api.search_submissions(author=username, subreddit=target_sub, limit = 1)
+                comments = [comment.d_ for comment in banned_user]
+                submissions = [submission.d_ for submission in banned_user_posts]
+
+                for comment in comments:
+                        comment_timestamp = int(comment["created_utc"])
+                        body_text = comment["body"]
+                        # Make a multi-line comment linkable via markdown. 
+                        replace_comment = body_text[:600]
+                        sliced_comment = "".join(f"{i}" for i in replace_comment.split("\n\n"))
+                        link_text = comment["permalink"] 
+                        post_time = datetime.fromtimestamp(comment_timestamp).strftime("%a, %b %d, %Y")
+                        comment_body = f"\n> [{sliced_comment}...]({link_text})\n\n*^(posted on:* {post_time})\n\n"
+
+                for submission in submissions:
+                        submission_timestamp = int(submission["created_utc"])     
+                        subm_text = submission["title"]
+                        subm_link = submission["permalink"] 
+                        submission_title = f'\n> [{subm_text}]({subm_link})\n\n*^(posted on:* {post_time})\n\n' 
+
+                if submission_title is None:
+                    submission_title = 'None Found'
+                if comment_body is None: 
+                    comment_body = 'None Found'
+                
+                response = f"Here's what I found for the queried user.\n\n**Last post in the subreddit:** \n\n{submission_title}\n\n**Last comment:** \n\n{comment_body}"
+                conversation.reply(body=response, internal=True)
+                conversation.unhighlight() 
+                conversation.archive()    
     except Exception as e:
       print("\t\n### ERROR - Modmail couldn't be checked.")
       traceback.print_exc()             
